@@ -8,3 +8,12 @@ class Usuario(db.Model):
     
     def __repr__(self):
         return f"<Usuario {self.nome}, {self.tipo}>"
+    
+    def json(self) -> dict:
+        return {
+            "id":self.id,
+            "nome":self.nome,
+            "email":self.email,
+            "senha":self.senha,
+            "tipo":self.tipo
+        }
