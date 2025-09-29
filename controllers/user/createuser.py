@@ -1,6 +1,7 @@
 from models.usermodel import Usuario
 from errors.create_error import CreateError
 from flask import request, jsonify
+from werkzeug.security import generate_password_hash
 
 def create_user() -> Usuario:
     """
@@ -24,10 +25,12 @@ def create_user() -> Usuario:
     email = data.get("email")
     senha = data.get("senha")
     tipo = data.get("tipo")
+    
     if not nome or not email or not senha or not tipo:
         raise CreateError("<pre>Nem todos os campos foram preenchidos corretamente. Deveria se parecer com isso:\n{\n 'nome':'user123'\n 'email':'email@email.com'\n 'senha':'segredo'\n 'tipo':'aluno'\n}</pre>")
     
-    novo_usuario = Usuario(nome=nome, email=email, senha=senha, tipo=tipo)
+    senha_hash = generate_password_hash(senha)
+    novo_usuario = Usuario(nome=nome, email=email, senha=senha_hash, tipo=tipo)
     if not novo_usuario:
         raise CreateError("<pre>Erro ao criar o usuário (erro interno do backend)<pre>")
     
