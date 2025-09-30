@@ -2,6 +2,7 @@ from models.usermodel import Usuario
 from errors.create_error import CreateError
 from flask import request, jsonify
 from werkzeug.security import generate_password_hash
+from utils.database_instance import db
 
 def create_user() -> Usuario:
     """
@@ -34,4 +35,6 @@ def create_user() -> Usuario:
     if not novo_usuario:
         raise CreateError("<pre>Erro ao criar o usuário (erro interno do backend)<pre>")
     
+    db.session.add(novo_usuario)
+    db.session.commit()
     return jsonify(novo_usuario.json())
