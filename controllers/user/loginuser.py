@@ -15,7 +15,7 @@ def login_user() -> dict:
     }
 
     Returns:
-        flask.Response: Um JSON contendo os dados do usuário e o token JWT.
+        Um dicionário contendo os dados do usuário e o token JWT.
 
     Raises:
         LoginError: Se os dados estiverem incorretos ou o usuário não existir.
@@ -38,6 +38,6 @@ def login_user() -> dict:
     access_token = create_access_token(identity={"id": usuario.id, "tipo": usuario.tipo})
 
     return jsonify({
-        "usuario": usuario.json(),
+        "usuario": usuario,
         "token": access_token
     }), 200
