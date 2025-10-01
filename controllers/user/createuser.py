@@ -15,7 +15,7 @@ def create_user() -> Usuario:
         - tipo (str): Tipo do usuário (ex: 'aluno', 'admin', etc).
 
     Returns:
-        flask.Response: Um objeto JSON contendo os dados do novo usuário.
+        Um Objeto da classe Usuario"
 
     Raises:
         CreateError: Se algum campo obrigatório estiver ausente ou se ocorrer
@@ -37,4 +37,4 @@ def create_user() -> Usuario:
     
     db.session.add(novo_usuario)
     db.session.commit()
-    return jsonify(novo_usuario.json())
+    return novo_usuario

@@ -23,7 +23,7 @@ def view_user_by_id() -> Usuario:
     if not usuario:
         raise ViewError(f"Usuário com ID {user_id} não encontrado.")
 
-    return jsonify(usuario.json())
+    return usuario
 
 
 def view_user_by_name() -> list[Usuario]:
@@ -34,7 +34,7 @@ def view_user_by_name() -> list[Usuario]:
         - nome (str): Nome parcial ou completo do usuário. Exemplo: /user?nome=joao
 
     Returns:
-        flask.Response: Lista JSON com os usuários encontrados.
+        Lista de Objetos da classe Usuario
 
     Raises:
         ViewError: Se 'nome' não for fornecido ou se nenhum usuário for encontrado.
@@ -47,7 +47,7 @@ def view_user_by_name() -> list[Usuario]:
     if not usuarios:
         raise ViewError(f"Nenhum usuário encontrado com nome contendo '{nome}'.")
 
-    return jsonify([user.json() for user in usuarios])
+    return usuarios
 
 
 def view_user_by_role() -> list[Usuario]:
@@ -58,7 +58,7 @@ def view_user_by_role() -> list[Usuario]:
         - tipo (str): Tipo do usuário (ex: 'aluno', 'admin', etc). Exemplo: /user?tipo=aluno
 
     Returns:
-        flask.Response: Lista JSON dos usuários encontrados.
+        Lista de Objetos da classe Usuario
 
     Raises:
         ViewError: Se o parâmetro 'tipo' não for fornecido ou se nenhum usuário for encontrado.
@@ -71,4 +71,4 @@ def view_user_by_role() -> list[Usuario]:
     if not usuarios:
         raise ViewError(f"Nenhum usuário do tipo '{tipo}' encontrado.")
 
-    return jsonify([user.json() for user in usuarios])
+    return usuarios

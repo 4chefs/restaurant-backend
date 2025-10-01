@@ -3,7 +3,7 @@ from flask import request, jsonify
 from flask_jwt_extended import create_access_token
 from errors.login_error import LoginError
 
-def login_user():
+def login_user() -> dict:
     """
     Realiza o login de um usuário com base nos dados recebidos em uma requisição JSON da API.
     Gera e retorna um token JWT para autenticação nas próximas requisições.
