@@ -1,6 +1,6 @@
 from models.usermodel import Usuario
 from flask import request
-from errors.login_error import LoginError
+from errors.update_error import UpdateError
 from utils.database_instance import db
 
 def update_user(user_id) -> Usuario:
@@ -19,17 +19,17 @@ def update_user(user_id) -> Usuario:
         Objeto da classe Usuario
 
     Raises:
-        LoginError: Se o usuário não existir ou os dados forem inválidos.
+        UpdateError: Se o usuário não existir ou os dados forem inválidos.
     """
 
     data = request.json
     if not data:
-        raise LoginError("<pre>Envie ao menos um campo para atualizar.</pre>")
+        raise UpdateError("<pre>Envie ao menos um campo para atualizar.</pre>")
 
     usuario: Usuario = Usuario.query.get(user_id)
 
     if not usuario:
-        raise LoginError("<pre>Usuário não encontrado.</pre>")
+        raise UpdateError("<pre>Usuário não encontrado.</pre>")
 
     nome = data.get("nome")
     email = data.get("email")
@@ -42,7 +42,7 @@ def update_user(user_id) -> Usuario:
     if email:
         existente = Usuario.query.filter_by(email=email).first()
         if existente and existente.id != usuario.id:
-            raise LoginError("<pre>Já existe um usuário com esse email.</pre>")
+            raise UpdateError("<pre>Já existe um usuário com esse email.</pre>")
         usuario.email = email
 
     if tipo:
