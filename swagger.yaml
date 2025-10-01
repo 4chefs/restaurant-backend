@@ -1,0 +1,213 @@
+swagger: "2.0"
+info:
+  title: API de Usuários - Restaurante
+  version: 1.0.0
+  description: Endpoints relacionados à gestão de usuários
+
+host: localhost:5000
+basePath: /
+
+schemes:
+  - http
+
+tags:
+  - name: Usuário
+
+paths:
+
+  /user/create:
+    post:
+      tags:
+        - Usuário
+      summary: Criar novo usuário
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/UserCreate'
+      responses:
+        200:
+          description: Usuário criado com sucesso
+          schema:
+            $ref: '#/definitions/UserResponse'
+
+  /user/login:
+    post:
+      tags:
+        - Usuário
+      summary: Efetuar login
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/UserLogin'
+      responses:
+        200:
+          description: Login efetuado com sucesso
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  user:
+                    $ref: '#/definitions/User'
+              message:
+                type: string
+
+  /user/id/{id}:
+    get:
+      tags:
+        - Usuário
+      summary: Buscar usuário por ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: string
+      responses:
+        200:
+          description: Usuário encontrado
+          schema:
+            $ref: '#/definitions/UserResponse'
+
+  /user/name/{name}:
+    get:
+      tags:
+        - Usuário
+      summary: Buscar usuários por nome
+      parameters:
+        - in: path
+          name: name
+          required: true
+          type: string
+      responses:
+        200:
+          description: Usuários encontrados
+          schema:
+            $ref: '#/definitions/UserListResponse'
+
+  /user/role/{role}:
+    get:
+      tags:
+        - Usuário
+      summary: Buscar usuários por tipo (role)
+      parameters:
+        - in: path
+          name: role
+          required: true
+          type: string
+      responses:
+        200:
+          description: Usuários encontrados
+          schema:
+            $ref: '#/definitions/UserListResponse'
+
+  /user/delete/{id}:
+    delete:
+      tags:
+        - Usuário
+      summary: Deletar usuário
+      security:
+        - Bearer: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: string
+      responses:
+        200:
+          description: Usuário apagado com sucesso
+          schema:
+            $ref: '#/definitions/UserResponse'
+
+  /user/update/{id}:
+    put:
+      tags:
+        - Usuário
+      summary: Atualizar usuário
+      security:
+        - Bearer: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: string
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/UserUpdate'
+      responses:
+        200:
+          description: Usuário atualizado com sucesso
+          schema:
+            $ref: '#/definitions/UserResponse'
+
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+
+definitions:
+  User:
+    type: object
+    properties:
+      id:
+        type: string
+      nome:
+        type: string
+      email:
+        type: string
+      role:
+        type: string
+
+  UserCreate:
+    type: object
+    properties:
+      nome:
+        type: string
+      email:
+        type: string
+      senha:
+        type: string
+      role:
+        type: string
+
+  UserLogin:
+    type: object
+    properties:
+      email:
+        type: string
+      senha:
+        type: string
+
+  UserUpdate:
+    type: object
+    properties:
+      nome:
+        type: string
+      email:
+        type: string
+      role:
+        type: string
+
+  UserResponse:
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/User'
+      message:
+        type: string
+
+  UserListResponse:
+    type: object
+    properties:
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/User'
+      message:
+        type: string
