@@ -15,7 +15,7 @@ def create_user() -> Usuario:
         - tipo (str): Tipo do usuário (ex: 'aluno', 'admin', etc).
 
     Returns:
-        Um Objeto da classe Usuario"
+        Um Objeto da classe Usuario
 
     Raises:
         CreateError: Se algum campo obrigatório estiver ausente ou se ocorrer
